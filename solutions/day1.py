@@ -3,19 +3,12 @@ import copy
 from readFile import *
 
 
-def partA(list_of_elves):
-    maximum = 0
-    for elf in list_of_elves:
-        maximum = max(maximum, sum(elf))
-    return maximum
-
-
-def partB(list_of_elves):
+def solution(list_of_elves, n):
     maximum = []
     for elf in list_of_elves:
         maximum.append(sum(elf))
         maximum.sort(reverse=True)
-        if len(maximum) > 3:
+        if len(maximum) > n:
             del maximum[-1]
     return sum(maximum)
 
@@ -30,5 +23,5 @@ if __name__ == '__main__':
             calories.clear()
         else:
             calories.append(int(line))
-    print('part A:', partA(elves))
-    print('part B:', partB(elves))
+    print('part A:', solution(elves, 1))
+    print('part B:', solution(elves, 3))

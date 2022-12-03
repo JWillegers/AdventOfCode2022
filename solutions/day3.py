@@ -3,13 +3,13 @@ from readFile import *
 
 def part1(input_file, priority_dict):
     priority = 0
-    for line in input_file:
-        assert(len(line) % 2 == 0)
+    for rucksack in input_file:
+        assert(len(rucksack) % 2 == 0)
         compartment_one = set()
         compartment_two = set()
-        for i in range(len(line)):
-            character = line[i]
-            if i < len(line) / 2:
+        for i in range(len(rucksack)):
+            character = rucksack[i]
+            if i < len(rucksack) / 2:
                 compartment_one.add(character)
             else:
                 compartment_two.add(character)
@@ -27,7 +27,7 @@ def part2(input_file, priority_dict):
         elf_one = set(input_file[3 * i])
         elf_two = set(input_file[3 * i + 1])
         elf_three = set(input_file[3 * i + 2])
-        overlap = elf_one.intersection(elf_two.intersection(elf_three))
+        overlap = elf_one.intersection(elf_two, elf_three)
         assert(1 == len(overlap))
         priority += priority_dict[overlap.pop()]
         i += 1

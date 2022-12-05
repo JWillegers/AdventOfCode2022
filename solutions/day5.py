@@ -26,11 +26,8 @@ def part2(instructions, stack):
             start = int(split[3])
             end = int(split[5])
             assert (amount <= len(stack[start]))  # assumption
-            temp = []
-            for i in range(amount):
-                temp.append(stack[start].pop())
-            for i in range(len(temp)):
-                stack[end].append(temp.pop())
+            stack[end].extend(stack[start][-amount:])  # adding crates to end stack
+            stack[start] = stack[start][:len(stack[start]) - amount]  # removing crates from start stack
     answer = ''
     for i in range(1, len(stack)):
         answer += stack[i].pop()

@@ -2,7 +2,7 @@ import copy
 from readFile import *
 
 
-def part1(instructions, stack):
+def crateMover9000(instructions, stack):
     for line in instructions:
         if 'move' in line:
             split = line.split(' ')
@@ -18,7 +18,7 @@ def part1(instructions, stack):
     return answer
 
 
-def part2(instructions, stack):
+def crateMover9001(instructions, stack):
     for line in instructions:
         if 'move' in line:
             split = line.split(' ')
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     stack_of_crates = create_stack(file, 8, 9)
     test_file = line_str(5, True)
     test_stack_of_crates = create_stack(test_file, 3, 3)
-    assert(part1(test_file, copy.deepcopy(test_stack_of_crates)) == 'CMZ')
-    assert(part2(test_file, copy.deepcopy(test_stack_of_crates)) == 'MCD')
-    print('part1:', part1(file, copy.deepcopy(stack_of_crates)))
-    print('part2:', part2(file, copy.deepcopy(stack_of_crates)))
+    assert(crateMover9000(test_file, copy.deepcopy(test_stack_of_crates)) == 'CMZ')
+    assert(crateMover9001(test_file, copy.deepcopy(test_stack_of_crates)) == 'MCD')
+    print('crateMover9000 (part1):', crateMover9000(file, copy.deepcopy(stack_of_crates)))
+    print('crateMover9001 (part2):', crateMover9001(file, copy.deepcopy(stack_of_crates)))

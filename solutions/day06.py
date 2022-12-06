@@ -9,7 +9,7 @@ def solution(datastream, n_distinct_characters):
 
 
 def one_line(datastream, n_distinct_characters):
-    return min([(i if len(set(datastream[i-n_distinct_characters:i])) == n_distinct_characters else 999999) for i in range(n_distinct_characters + 1, len(datastream))])
+    return min([(i if len(set(datastream[i-n_distinct_characters:i])) == n_distinct_characters else len(datastream) + 1) for i in range(n_distinct_characters + 1, len(datastream))])
 
 
 if __name__ == '__main__':

@@ -1,44 +1,10 @@
 from readFile import *
 
 
-def part1(instructions):
+def rope_bridge(instructions, rope_length):
     visited = set()
     visited.add((0, 0))
-    head = (0, 0)
-    tail = (0, 0)
-    for motion in instructions:
-        direction, amount_of_steps = motion.split(' ')
-        for step in range(int(amount_of_steps)):
-            # change position head
-            if direction == 'R':
-                head = (head[0], head[1] + 1)
-            elif direction == 'L':
-                head = (head[0], head[1] - 1)
-            elif direction == 'U':
-                head = (head[0] + 1, head[1])
-            elif direction == 'D':
-                head = (head[0] - 1, head[1])
-            else:
-                exit(9)
-
-            # check if we need to change tail position
-            if head[0] - tail[0] > 1:
-                tail = (head[0] - 1, head[1])
-            elif head[0] - tail[0] < -1:
-                tail = (head[0] + 1, head[1])
-            elif head[1] - tail[1] > 1:
-                tail = (head[0], head[1] - 1)
-            elif head[1] - tail[1] < -1:
-                tail = (head[0], head[1] + 1)
-            visited.add(tail)
-
-    return len(visited)
-
-
-def part2(instructions):
-    visited = set()
-    visited.add((0, 0))
-    rope = [(0, 0) for x in range(10)]
+    rope = [(0, 0) for x in range(rope_length)]
     for motion in instructions:
         direction, amount_of_steps = motion.split(' ')
         for step in range(int(amount_of_steps)):
@@ -82,9 +48,9 @@ def part2(instructions):
 if __name__ == '__main__':
     test_file_small = line_str(91, True)
     test_file_large = line_str(92, True)
-    assert(13 == part1(test_file_small))
-    assert(1 == part2(test_file_small))
-    assert(36 == part2(test_file_large))
+    assert(13 == rope_bridge(test_file_small, 2))
+    assert(1 == rope_bridge(test_file_small, 10))
+    assert(36 == rope_bridge(test_file_large, 10))
     file = line_str(9)
-    print('part1:', part1(file))
-    print('part2:', part2(file))
+    print('part1:', rope_bridge(file, 2))
+    print('part2:', rope_bridge(file, 10))

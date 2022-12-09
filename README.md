@@ -5,3 +5,8 @@ All code for the solutions can be found in the solutions folder.
 
 
 Remember, not all code is optimized nor the smartest implementation. The code is written to get me to the answer, and not to be optimized for production.
+
+## Libraries needed
+
+- copy (python standard library)
+- numpy

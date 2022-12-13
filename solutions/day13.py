@@ -39,8 +39,37 @@ def part1_recursion(row_left, row_right):
     return False, True
 
 
+def part2(data):
+    parsed_data = []
+
+    # remove empty lines
+    for i in range(len(data)):
+        if len(data[i]) > 0:
+            parsed_data.append(ast.literal_eval(data[i]))
+
+    # add divider packets
+    parsed_data.append([[2]])
+    parsed_data.append([[6]])
+
+    # bubble sort
+    for i in range(len(parsed_data)):
+        for j in range(len(parsed_data)-i-1):
+            row_left = parsed_data[j]
+            row_right = parsed_data[j + 1]
+            if not part1_recursion(row_left, row_right)[1]:
+                parsed_data[j], parsed_data[j + 1] = parsed_data[j + 1], parsed_data[j]
+
+    # find divider packets
+    index2 = parsed_data.index([[2]]) + 1
+    index6 = parsed_data.index([[6]]) + 1
+
+    return index2 * index6
+
+
 if __name__ == '__main__':
     test_file = line_str(13, True)
     assert(part1(test_file) == 13)
+    assert(part2(test_file) == 140)
     file = line_str(13)
-    print('part1:', part1(file))  # 3798 < x < 6261
+    print('part1:', part1(file))
+    print('part2:', part2(file))

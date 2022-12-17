@@ -10,3 +10,11 @@ Remember, not all code is optimized nor the smartest implementation. The code is
 
 - copy (python standard library)
 - numpy
+
+## Interesting puzzles
+- Day 7: Traveling through files
+- Day 9: Moving rope
+- Day 10: Clock circuit
+- Day 11 (part 2): Managing big numbers
+- Day 16: Travelling salesman problem
+- Day 17: Tetris (Doing something a billion times)

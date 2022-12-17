@@ -1,4 +1,3 @@
-import math
 from readFile import *
 from copy import deepcopy
 import itertools
@@ -13,52 +12,49 @@ def part1(data):
 
     # key is as follows (start, goal)
     valves_that_we_want_open.add('AA')
-    paths = get_paths(data, valves_that_we_want_open)
+    steps_from_a_to_b = get_paths(data, valves_that_we_want_open)
 
     # assumption that I make, if False the code will break
     assert(data['AA']['flow'] == 0)
     valves_that_we_want_open.remove('AA')
     valves_that_we_want_open = list(valves_that_we_want_open)
 
-    # (Location, time, flow per minute, total flow, opened_valves as [])
-    queue = [('AA', 0, 0, 0, [])]
+    # greedy solution
+    #greedy = sorted(valves_that_we_want_open, key=lambda x:data[x]['flow'], reverse=True)
+    greedy = ['DD', 'BB', 'JJ', 'HH', 'EE', 'CC']
+    greedy.insert(0, 'AA')
+    max_score = calculate_score(data, greedy, steps_from_a_to_b)
 
-    max_flow = 0
-    while len(queue) > 0:
-        location, time, fpm, total_flow, opened_valves = queue.pop()
-        max_flow, queue = process(queue, data, valves_that_we_want_open, paths, max_flow, location, time, fpm, total_flow, opened_valves)
-    print(max_flow)
-    return max_flow
+    return max_score
+
+
+def calculate_score(data, route, steps_from_a_to_b):
+    time = 0
+    index = 0
+    fpm = 0
+    total_flow = 0
+    while time <= 30 and index + 1 < len(route):
+        start = route[index]
+        end = route[index + 1]
+        # + 1 because we also need to open the valve
+        time_needed_to_travel_and_open_valve = steps_from_a_to_b[(start, end)] + 1
+        total_flow += fpm * min(30 - time, time_needed_to_travel_and_open_valve)
+        time += time_needed_to_travel_and_open_valve
+        fpm += data[route[index + 1]]['flow']
+        index += 1
+
+    if time <= 30:
+        total_flow += fpm * (30 - time)
+
+    return total_flow
 
 
 def get_paths(data, valves_that_we_want_open):
     paths = dict()
     for x, y in itertools.combinations(valves_that_we_want_open, 2):
-        paths[(x, y)] = find_path(x, y, data)
-        paths[(y, x)] = find_path(y, x, data)
+        paths[(x, y)] = len(find_path(x, y, data))
+        paths[(y, x)] = len(find_path(y, x, data))
     return paths
-
-
-def process(queue, data, valves_that_we_want_open, paths, max_flow, location, time, fpm, total_flow, opened_valves):
-    if time >= 30:
-        max_flow = max(max_flow, total_flow)
-    expected_new_flow = []
-    for valve in valves_that_we_want_open:
-        if valve is not location and valve not in opened_valves:
-            expected_new_flow.append((valve, (30 - time - len(paths[(location, valve)]) - 1) * data[valve]['flow']))
-    expected_new_flow = sorted(expected_new_flow, key=lambda x: x[1], reverse=True)
-    if len(expected_new_flow) == 0:
-        max_flow = max(max_flow, total_flow + (30 - time) * (fpm + data[location]['flow']))
-    else:
-        for i in range(min(1 + math.ceil(len(valves_that_we_want_open) / 3), len(expected_new_flow))):
-            valve = expected_new_flow[i][0]
-            new_fpm = fpm + data[location]['flow']
-            cov = deepcopy(opened_valves)
-            cov.append(valve)
-            queue.append((valve, time + len(paths[(location, valve)]) + 1, new_fpm,
-                          total_flow + min(30 - time, len(paths[(location, valve)]) + 1) * new_fpm, cov))
-    return max_flow, queue
-
 
 
 # BFS
@@ -98,7 +94,7 @@ if __name__ == '__main__':
     test_file = line_str(16, True)
     test_tunnels = parse(test_file)
     assert(part1(test_tunnels) == 1651)
-    #exit(0)
+    exit(0)
     file = line_str(16)
     global_tunnels = parse(file)
     print('part1:', part1(global_tunnels))

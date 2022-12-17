@@ -20,12 +20,42 @@ def part1(data):
     valves_that_we_want_open = list(valves_that_we_want_open)
 
     # greedy solution
-    #greedy = sorted(valves_that_we_want_open, key=lambda x:data[x]['flow'], reverse=True)
-    greedy = ['DD', 'BB', 'JJ', 'HH', 'EE', 'CC']
-    greedy.insert(0, 'AA')
-    max_score = calculate_score(data, greedy, steps_from_a_to_b)
+    route = sorted(valves_that_we_want_open, key=lambda x:data[x]['flow'])
+    route.insert(0, 'AA')
+    max_score = calculate_score(data, route, steps_from_a_to_b)
+
+    # pairwise exchange or 2-opt
+    improvement_made = True
+    while improvement_made:
+        improvement_made = False
+        run = True
+        i = 0
+        while i + 1 < len(route) and run:
+            j = i + 1
+            while j < len(route) and run:
+                new_route = swap(route, i, j)
+                new_distance = calculate_score(data, new_route, steps_from_a_to_b)
+                if new_distance > max_score:
+                    improvement_made = True
+                    run = False
+                    route = new_route
+                    max_score = new_distance
+                j += 1
+            i += 1
 
     return max_score
+
+
+def swap(route, v1, v2):
+    new_route = []
+    for i in range(v1 + 1):
+        new_route.append(route[i])
+    for i in range(v2, v1, -1):
+        new_route.append(route[i])
+    for i in range(v2 + 1, len(route)):
+        new_route.append(route[i])
+    assert(len(new_route) == len(route))
+    return new_route
 
 
 def calculate_score(data, route, steps_from_a_to_b):
@@ -94,7 +124,8 @@ if __name__ == '__main__':
     test_file = line_str(16, True)
     test_tunnels = parse(test_file)
     assert(part1(test_tunnels) == 1651)
-    exit(0)
+    #exit(0)
     file = line_str(16)
     global_tunnels = parse(file)
     print('part1:', part1(global_tunnels))
+    # ['AA', 'QW', 'OO', 'CA', 'JB', 'DZ', 'UG', 'GI', 'MS', 'LD', 'DW', 'YR', 'XM', 'UJ', 'BH', 'JT'] 1506 too low

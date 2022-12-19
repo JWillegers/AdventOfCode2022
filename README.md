@@ -7,8 +7,8 @@ All code for the solutions can be found in the solutions folder.
 Remember, not all code is optimized nor the smartest implementation. The code is written to get me to the answer, and not to be optimized for production.
 
 ## Libraries needed
+Any library used but not in this list is assumed to be a standard library
 
-- copy (python standard library)
 - numpy
 
 ## Interesting puzzles
@@ -17,4 +17,6 @@ Remember, not all code is optimized nor the smartest implementation. The code is
 - Day 10: Clock circuit
 - Day 11 (part 2): Managing big numbers
 - Day 16: Travelling salesman problem
+  - part1: pairwise exchange or 2-opt
+  - part2: simulated annealing
 - Day 17: Tetris (Doing something a billion times)

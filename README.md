@@ -20,3 +20,4 @@ Any library used but not in this list is assumed to be a standard library
   - part1: pairwise exchange or 2-opt
   - part2: simulated annealing
 - Day 17: Tetris (Doing something a billion times)
+- Day 20: Linked List

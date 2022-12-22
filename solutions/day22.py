@@ -32,7 +32,11 @@ def solution(my_map, path, part1):
         if my_map[0][i] == '.':
             location = [0, i]
             break
+    i = 0
     for instruction in path:
+        i += 1
+        if i == 150:
+            continue
         if type(instruction) is int:
             if direction == 'R':
                 location, direction = walk(my_map, location, 0, 1, instruction, part1, direction)
@@ -62,7 +66,6 @@ def walk(my_map, location, d_row, d_col, n_steps, part1, direction):
                 location[0] += d_row
                 location[1] += d_col
             elif my_map[row + d_row][col + d_col] == rock:
-                wrap_around = False
                 break
 
         if wrap_around:
@@ -144,7 +147,7 @@ def part2_wrap(my_map, row, col, d_row, d_col, location, direction):
                 assert(d_col == 0)
                 assert(d_row == -1)
         elif col == 149 and direction == 'R':
-            # go to left of 4 (mirrored)
+            # go to right of 4 (mirrored)
             row = 49 - row + 100
             if my_map[row][99] == free_space:
                 location = [row, 99]
@@ -152,7 +155,7 @@ def part2_wrap(my_map, row, col, d_row, d_col, location, direction):
                 d_col = -1
                 d_row = 0
         elif row == 49 and direction == 'D':
-            # go to left of 3
+            # go to right of 3
             row = col - 100 + 50
             if my_map[row][99] == free_space:
                 location = [row, 99]
@@ -180,7 +183,7 @@ def part2_wrap(my_map, row, col, d_row, d_col, location, direction):
     elif 100 <= row < 150 and 50 <= col:
         # side 4
         if col == 99 and direction == 'R':
-            # go to left of side 2 (mirrored)
+            # go to right of side 2 (mirrored)
             row = 49 - (row - 100)
             if my_map[row][149] == free_space:
                 location = [row, 149]
@@ -188,7 +191,7 @@ def part2_wrap(my_map, row, col, d_row, d_col, location, direction):
                 d_col = -1
                 d_row = 0
         elif row == 149 and direction == 'D':
-            # go to left of 6
+            # go to right of 6
             row = col - 50 + 150
             if my_map[row][49] == free_space:
                 location = [row, 49]

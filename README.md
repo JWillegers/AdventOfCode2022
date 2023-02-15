@@ -21,3 +21,4 @@ Any library used but not in this list is assumed to be a standard library
   - part2: simulated annealing
 - Day 17: Tetris (Doing something a billion times)
 - Day 20: Linked List
+- Day 22: Needed a goodwritten unittest to finish this problem (day22tests.py)

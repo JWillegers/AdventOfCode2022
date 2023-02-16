@@ -129,12 +129,9 @@ def rock_falling(tower, n_moving_rocks):
 
     return tower, falling
 
-'''
-NOTE: the highest point simulated is 0, and the floor is at len(tower) - 1
-Going through every airstream once
 
-'''
-def solution(airflow, print_tower_bool = False):
+# NOTE: the highest point simulated is 0, and the floor is at len(tower) - 1
+def part2(airflow, print_tower_bool):
     airflow_counter = 0
     max_airflow_counter = len(airflow)
     rock_counter = 0
@@ -143,8 +140,7 @@ def solution(airflow, print_tower_bool = False):
     for x in range(7):
         tower.insert(0, ['|'] + [open_field]*7 + ['|'])
 
-    while not (shape_counter == 0 and airflow_counter % max_airflow_counter == 0 and rock_counter != 0):
-
+    while airflow_counter < max_airflow_counter:
         tower, n_parts = place_new_shape(tower, shape_counter)
         falling = True
         while falling:
@@ -162,7 +158,7 @@ def solution(airflow, print_tower_bool = False):
         print('\n')
         print('len airflow:', max_airflow_counter)
         print('shape counter:', shape_counter)
-        print_tower(tower, True)
+        print_tower(tower, True, True)
         print('\n')
 
     return -1
@@ -193,4 +189,4 @@ if __name__ == '__main__':
     file = line_str(17)
     print('part1:', part1(file[0]))
     # If you just want the answers, set boolean to False
-    #print('part2:', solution(file[0], print_tower_bool=True))
+    print('part2:', part2(file[0], True))
